@@ -3,7 +3,8 @@
  * and open the template in the editor.
  */
 package personalplanner;
-import java.util.Date;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 /**
  *
@@ -11,34 +12,58 @@ import java.util.Date;
  */
 public class contact {
     
-    private int id;
-    private String name;
-    private Date birthday;
-    private Date anniversary;
-    private String type;
-    private int lastID = 0;
+    private int id;                 // id num
+    private String name;            // contact's name
+    private Calendar birthday;      // contact's birthdate
+    private Calendar anniversary;   // contact's anniversary date
+    private String type;            // contact's relation to the contactbook owner
     
-    public contact(String n, Date bday, Date anniv, String t)
+    public contact(int ID, String n)
     {
-        id = lastID;
+        id = ID;
+        name = n;
+    }
+    
+    public contact(int ID, String n, String t)
+    {
+        id = ID;
+        name = n;
+        type = t;
+    }
+    
+     public contact(int ID, String n, Calendar bday)
+    {
+        id = ID;
+        name = n;
+        birthday = bday;
+    }
+    
+    public contact(int ID, String n, Calendar bday, String t)
+    {
+        id = ID;
+        name = n;
+        birthday = bday;
+        type = t;
+    }
+    
+    public contact(int ID, String n, Calendar bday, Calendar anniv, String t)
+    {
+        id = ID;
         name = n;
         birthday = bday;
         anniversary = anniv;
         type = t;
-        lastID += 1;
     }
+    
+    
     
     public int getID(){return id;}
     public String getName(){return name;}
-    public Date getBirthday(){return birthday;}
-    public Date getAnniversary(){return anniversary;}
+    public Calendar getBirthday(){return birthday;}
+    public Calendar getAnniversary(){return anniversary;}
     public String getType(){return type;}
     
-    public static void main(String[] args) {
-        // TODO code application logic here
-        Sysetemsjfgjbigfkbhubhudhbkdfbhwegrf
-        
-}
+    
     
 }
 
