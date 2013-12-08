@@ -33,12 +33,6 @@ public class contact {
     public Date getBirthday(){return birthday;}
     public Date getAnniversary(){return anniversary;}
     public String getType(){return type;}
-    
-    public static void main(String[] args) {
-        // TODO code application logic here
-        Sysetemsjfgjbigfkbhubhudhbkdfbhwegrf
-        
-}
-    
+     
 }
 
