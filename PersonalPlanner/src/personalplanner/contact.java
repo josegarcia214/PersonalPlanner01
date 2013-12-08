@@ -36,7 +36,7 @@ public class contact {
     
     public static void main(String[] args) {
         // TODO code application logic here
-        contact new = contact("Shane Hausler", "11/15/1992")
+        Sysetemsjfgjbigfkbhubhudhbkdfbh
         
 }
     
