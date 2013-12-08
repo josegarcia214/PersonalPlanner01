@@ -4,7 +4,6 @@
  */
 package personalplanner;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 /**
  *
@@ -13,10 +12,10 @@ import java.util.GregorianCalendar;
 public class contact {
     
     private int id;                 // id num
-    private String name;            // contact's name
-    private Calendar birthday;      // contact's birthdate
-    private Calendar anniversary;   // contact's anniversary date
-    private String type;            // contact's relation to the contactbook owner
+    private String name = null;            // contact's name
+    private Calendar birthday = null;      // contact's birthdate
+    private Calendar anniversary = null;   // contact's anniversary date
+    private String type = null;            // contact's relation to the contactbook owner
     
     public contact(int ID, String n)
     {
