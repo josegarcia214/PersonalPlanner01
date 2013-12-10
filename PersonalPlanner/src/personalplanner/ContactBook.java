@@ -21,10 +21,10 @@ public class ContactBook {
      * to send to the datebook when requested.
      */
     
-    private contact[] book;
+    //private contact[] book;
     private List<contact> book1 = new ArrayList<>();
     
-    public ContactBook(contact[] c)
+    /*public ContactBook(contact[] c)
     {
         book = new contact[c.length];
         
@@ -33,6 +33,7 @@ public class ContactBook {
             book[count] = c[count];
         }
     }
+    */
     
     public ContactBook(List<contact> c)
     {
@@ -44,37 +45,44 @@ public class ContactBook {
         }
     }
     
-    public ContactBook(Scanner in)
-    {
+    public ContactBook(Scanner in){
         int currentID = 0;
         //contact[] list;
         List<contact> contacts = new ArrayList<>();
         
-        while (in.hasNext())
-        {
+        while (in.hasNext()){
             int id;                 // id num
-            String name;            // contact's name
+            String name = null;            // contact's name
             Calendar birthday = new GregorianCalendar();      // contact's birthdate
             Calendar anniversary = new GregorianCalendar();   // contact's anniversary date
-            String type = null;            // contact's relation to the contactbook owner
-            String reader;
             int month;
             int day;
             int year;
+            String type = null;            // contact's relation to the contactbook owner
+            String phone = null;
+            String addr = null;
+            String reader = null;
             
             id = currentID;
-            name = in.next();
-            reader = in.next();
-            if(reader.startsWith("!b")){
+            if(in.hasNext()) name = in.next();
+            if(in.hasNext()) reader = in.next();
+            
+            if(in.hasNext()) if(reader.startsWith("!b")){
                 month = Integer.parseInt(reader.substring(2));
                 day = Integer.parseInt(in.next());
                 year = Integer.parseInt(in.next());
                 birthday.set(Calendar.MONTH, month - 1);            //months range from 0 to 11
                 birthday.set(Calendar.DAY_OF_MONTH, day); 
                 birthday.set(Calendar.YEAR, year); 
+                if(in.hasNext()) reader = in.next();
                 }
-            reader = in.next();
-            if(reader.startsWith("!a")){
+            else{
+                birthday.set(Calendar.MONTH, 1);                 //ignore the date if it is 1/1/1
+                birthday.set(Calendar.DAY_OF_MONTH, 1); 
+                birthday.set(Calendar.YEAR, 1); 
+            }
+            
+            if(in.hasNext()) if(reader.startsWith("!a")){
                 month = Integer.parseInt(reader.substring(2));
                 day = Integer.parseInt(in.next());
                 year = Integer.parseInt(in.next());
@@ -82,44 +90,85 @@ public class ContactBook {
                 anniversary.set(Calendar.MONTH, month - 1);         //months range from 0 to 11
                 anniversary.set(Calendar.DAY_OF_MONTH, day); 
                 anniversary.set(Calendar.YEAR, year); 
-                reader = in.next();
+                if(in.hasNext()) reader = in.next();
             }
-            else
-            {
+            else{
                 anniversary.set(Calendar.MONTH, 1);                 //ignore the date if it is 1/1/1
                 anniversary.set(Calendar.DAY_OF_MONTH, 1); 
                 anniversary.set(Calendar.YEAR, 1); 
             }
-            //reader = in.next();
-            //System.out.println(reader.indexOf("\\n"));
-            type = reader.substring(0,reader.length()-1);
-            //type  = reader;
-            //System.out.println(in.next());
-                
-            //type = in.next();
-            in.nextLine();
-            contact c = new contact(id, name, birthday, anniversary, type);
             
-            /*System.out.println(id + ", " + name + ", " + 
-                birthday.get(Calendar.MONTH) + "/" + 
-                birthday.get(Calendar.DAY_OF_MONTH) + "/" + 
-                birthday.get(Calendar.YEAR) + ", " + 
-                //month + ", " + 
-                anniversary.get(Calendar.MONTH) + "/" + 
-                anniversary.get(Calendar.DAY_OF_MONTH) + "/" + 
-                anniversary.get(Calendar.YEAR) + ", " + 
-                type);
-            */
-                
+            if(in.hasNext()) if(reader.startsWith("!p")){
+                phone = reader.substring(2);
+                if(phone.substring(phone.length()-1).equals("\n")){
+                    phone = phone.substring(0,phone.length()-1);
+                    System.out.println("Changed: " + phone);
+                }
+                if(in.hasNext()) reader = in.next();
+            }
+            else phone = "null";
+            
+            if(in.hasNext()) if(reader.startsWith("!t")){
+                type = reader.substring(2);
+                //reader = in.next();
+            }
+            else type = "null";
+            contact c = new contact(id, name, birthday, anniversary, type, phone, addr);
+            
+            //System.out.println(id + ", " + name + ", " + birthday.get(Calendar.MONTH) + "/" + birthday.get(Calendar.DAY_OF_MONTH) + "/" + birthday.get(Calendar.YEAR) + ", " + anniversary.get(Calendar.MONTH) + "/" + anniversary.get(Calendar.DAY_OF_MONTH) + "/" + anniversary.get(Calendar.YEAR) + ", " + type);
+               
             //list[currentID] = new contact(id, name, birthday, anniversary, type);
             contacts.add(c);
             /////////////////////////////
             currentID +=1;
-            //in.nextLine();
+            if(in.hasNext()) in.nextLine();
         }
+        book1 = contacts;
     }
     
-    public void printContacts()
+    public void remove(int id){
+        if(!book1.isEmpty())
+            book1.remove(id);
+    }
+    
+    public void printContacts(){
+        //System.out.println("Book length of: " + book.length);
+        for(int count = 0; count <= book1.size()-1; count++){
+            //System.out.println(count);
+            System.out.println(book1.get(count).getID() + ", " + book1.get(count).getName() + ", " + 
+                book1.get(count).getBirthday().get(Calendar.MONTH) + "/" + 
+                book1.get(count).getBirthday().get(Calendar.DAY_OF_MONTH) + "/" + 
+                book1.get(count).getBirthday().get(Calendar.YEAR) + ", " + 
+                book1.get(count).getAnniversary().get(Calendar.MONTH) + "/" + 
+                book1.get(count).getAnniversary().get(Calendar.DAY_OF_MONTH) + "/" + 
+                book1.get(count).getAnniversary().get(Calendar.YEAR) + ", " + 
+                book1.get(count).getPhone() + ", " +
+                //book1.get(count).getAddress() + ", " +    
+                book1.get(count).getType());
+            //System.out.println("End of Cycle: " + count);
+        }
+        //System.out.println("done with contacts");
+    }
+    
+    public String[][] getContactDates(){
+        String[][] dateAndPerson = null;
+        for(int count = 0; count <= book1.size()-1; count++){
+            
+            if (book1.get(count).getBirthday().get(Calendar.YEAR)!=1){
+                dateAndPerson[count][0] = book1.get(count).getBirthday().get(Calendar.MONTH) + "/" + 
+                book1.get(count).getBirthday().get(Calendar.DAY_OF_MONTH) + "/" + 
+                book1.get(count).getBirthday().get(Calendar.YEAR) + ", " + book1.get(count).getName();
+            }
+            if (book1.get(count).getAnniversary().get(Calendar.YEAR)!=1){
+                dateAndPerson[count][1] = book1.get(count).getAnniversary().get(Calendar.MONTH) + "/" + 
+                book1.get(count).getAnniversary().get(Calendar.DAY_OF_MONTH) + "/" + 
+                book1.get(count).getAnniversary().get(Calendar.YEAR) + ", " + book1.get(count).getName();
+            } 
+        }
+        return dateAndPerson;
+    }
+    
+    /*public void printContacts()
     {
         //System.out.println("Book length of: " + book.length);
         for(int count = 0; count <= book.length-1; count++){
@@ -136,26 +185,9 @@ public class ContactBook {
         }
         //System.out.println("done with contacts");
     }
+    */
     
-    public void printContactsList()
-    {
-        //System.out.println("Book length of: " + book.length);
-        for(int count = 0; count <= book1.size()-1; count++){
-            //System.out.println(count);
-            System.out.println(book1.get(count).getID() + ", " + book1.get(count).getName() + ", " + 
-                book1.get(count).getBirthday().get(Calendar.MONTH) + "/" + 
-                book1.get(count).getBirthday().get(Calendar.DAY_OF_MONTH) + "/" + 
-                book1.get(count).getBirthday().get(Calendar.YEAR) + ", " + 
-                book1.get(count).getAnniversary().get(Calendar.MONTH) + "/" + 
-                book1.get(count).getAnniversary().get(Calendar.DAY_OF_MONTH) + "/" + 
-                book1.get(count).getAnniversary().get(Calendar.YEAR) + ", " + 
-                book1.get(count).getType());
-            //System.out.println("End of Cycle: " + count);
-        }
-        //System.out.println("done with contacts");
-    }
-    
-    public String[][] getContactDates()
+    /*public String[][] getContactDates()
     {
         String[][] dateAndPerson = null;
         for(int count = 0; count <= book.length-1; count++){
@@ -173,25 +205,8 @@ public class ContactBook {
         }
         return dateAndPerson;
     }
+    */
     
-    public String[][] getContactDatesList()
-    {
-        String[][] dateAndPerson = null;
-        for(int count = 0; count <= book1.size()-1; count++){
-            
-            if (book[count].getBirthday() != null){
-                dateAndPerson[count][0] = book[count].getBirthday().get(Calendar.MONTH) + "/" + 
-                book[count].getBirthday().get(Calendar.DAY_OF_MONTH) + "/" + 
-                book[count].getBirthday().get(Calendar.YEAR) + ", " + book[count].getName();
-            }
-            if (book[count].getAnniversary() != null){
-                dateAndPerson[count][1] = book[count].getAnniversary().get(Calendar.MONTH) + "/" + 
-                book[count].getAnniversary().get(Calendar.DAY_OF_MONTH) + "/" + 
-                book[count].getAnniversary().get(Calendar.YEAR) + ", " + book[count].getName();
-            } 
-        }
-        return dateAndPerson;
-    }
     
     
     /*Calendar birth = new GregorianCalendar();        birth.set(Calendar.YEAR, 1992); birth.set(Calendar.MONTH, 11); birth.set(Calendar.DAY_OF_MONTH, 15); 
