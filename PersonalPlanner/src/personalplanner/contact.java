@@ -16,6 +16,9 @@ public class contact {
     private Calendar birthday = null;      // contact's birthdate
     private Calendar anniversary = null;   // contact's anniversary date
     private String type = null;            // contact's relation to the contactbook owner
+    private String phoneNum = null;
+    private String address = null;
+    
     
     public contact(int ID, String n)
     {
@@ -54,12 +57,35 @@ public class contact {
         type = t;
     }
     
+    public contact(int ID, String n, Calendar bday, Calendar anniv, String t, String phone)
+    {
+        id = ID;
+        name = n;
+        birthday = bday;
+        anniversary = anniv;
+        type = t;
+        phoneNum = phone;
+    }
+    
+    public contact(int ID, String n, Calendar bday, Calendar anniv, String t, String phone, String addr)
+    {
+        id = ID;
+        name = n;
+        birthday = bday;
+        anniversary = anniv;
+        type = t;
+        phoneNum = phone;
+        address = addr;
+    }
+    
     
     
     public int getID(){return id;}
     public String getName(){return name;}
     public Calendar getBirthday(){return birthday;}
     public Calendar getAnniversary(){return anniversary;}
+    public String getPhone(){return phoneNum;}
+    public String getAddress(){return address;}
     public String getType(){return type;}
     
     
