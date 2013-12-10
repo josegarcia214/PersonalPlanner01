@@ -150,20 +150,27 @@ public class ContactBook {
         //System.out.println("done with contacts");
     }
     
-    public String[][] getContactDates(){
-        String[][] dateAndPerson = null;
+    public List<String> getContactDates(){
+        List<String> dateAndPerson = new ArrayList<>();
+        String data;
         for(int count = 0; count <= book1.size()-1; count++){
             
             if (book1.get(count).getBirthday().get(Calendar.YEAR)!=1){
-                dateAndPerson[count][0] = book1.get(count).getBirthday().get(Calendar.MONTH) + "/" + 
-                book1.get(count).getBirthday().get(Calendar.DAY_OF_MONTH) + "/" + 
-                book1.get(count).getBirthday().get(Calendar.YEAR) + ", " + book1.get(count).getName();
+                data = "" + book1.get(count).getBirthday().get(Calendar.MONTH) +
+                        "/" + book1.get(count).getBirthday().get(Calendar.DAY_OF_MONTH) + 
+                        "/" + book1.get(count).getBirthday().get(Calendar.YEAR) + 
+                        ", " + book1.get(count).getName() + 
+                        ", birthday";
+                dateAndPerson.add(data);
             }
-            if (book1.get(count).getAnniversary().get(Calendar.YEAR)!=1){
-                dateAndPerson[count][1] = book1.get(count).getAnniversary().get(Calendar.MONTH) + "/" + 
-                book1.get(count).getAnniversary().get(Calendar.DAY_OF_MONTH) + "/" + 
-                book1.get(count).getAnniversary().get(Calendar.YEAR) + ", " + book1.get(count).getName();
-            } 
+             if (book1.get(count).getBirthday().get(Calendar.YEAR)!=1){
+                data = "" + book1.get(count).getBirthday().get(Calendar.MONTH) +
+                        "/" + book1.get(count).getBirthday().get(Calendar.DAY_OF_MONTH) + 
+                        "/" + book1.get(count).getBirthday().get(Calendar.YEAR) + 
+                        " " + book1.get(count).getName() + 
+                        ", anniversary";
+                dateAndPerson.add(data);
+            }
         }
         return dateAndPerson;
     }
