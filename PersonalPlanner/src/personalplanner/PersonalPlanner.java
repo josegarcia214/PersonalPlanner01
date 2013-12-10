@@ -36,8 +36,13 @@ public class PersonalPlanner {
         //ContactBook book = new ContactBook(in);
         
         book.printContacts();
-        book.remove(1);
-        book.printContacts();
+        System.out.println();
+        //book.remove(1);
+        //book.printContacts();
+        //System.out.println();
+        
+        List<String> d = book.getContactDates();
+        System.out.println(d);
         
         /*
         Calendar birth = new GregorianCalendar();        
